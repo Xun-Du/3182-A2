@@ -86,4 +86,3 @@ Generative AI was used to assist with the following:
 - How to annotate extreme points (MAX, MIN) and statistical anomalies (z-score spikes/drops) on a Plotly figure?
 - How to dynamically compute and label the 90th percentile threshold on a time-series chart?
 - How to add shaded vertical regions (vrect) to highlight periods where violation counts exceed the 90th percentile?
-- How to set up a MongoDB fallback to CSV loading with error handling in a Jupyter notebook?

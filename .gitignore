@@ -1,0 +1,16 @@
+# Spark checkpoints
+checkpoints_mongodb_violations/
+checkpoints_*/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+Thumbs.db
