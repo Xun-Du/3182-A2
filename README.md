@@ -15,7 +15,7 @@ All other dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`) are pre-instal
 
 ### 1️. Launch the Spark Streaming Core Engine
 
-- Open the `**data_design_streaming.ipynb`\*\* notebook.
+- Open the `34248773_34220097_data_design_streaming.ipynb` notebook.
 - **Run all cells sequentially**.
 - This action compiles and activates the Stream-Stream Joins, Data Quality Filters, and unified MongoDB/Console output sinks.
 - The Driver thread will block and enter a real-time listening state. You will see the following confirmation log:
@@ -27,9 +27,9 @@ All other dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`) are pre-instal
 
 Once the streaming engine is up and actively listening, you can activate the producers to push real-time streams:
 
-- Open and run all cells in `**producer_a.ipynb`\*\* (Camera A data stream).
-- Open and run all cells in `**producer_b.ipynb`\*\* (Camera B data stream).
-- Open and run all cells in `**producer_c.ipynb**` (Camera C data stream).
+- Open and run all cells in `34248773_34220097_producer_a.ipynb` (Camera A data stream).
+- Open and run all cells in `34248773_34220097_producer_b.ipynb` (Camera B data stream).
+- Open and run all cells in `34248773_34220097_producer_c.ipynb` (Camera C data stream).
 
 > _At this point, you can monitor the real-time payload inside each producer's notebook terminal._
 
@@ -39,7 +39,7 @@ Once the streaming engine is up and actively listening, you can activate the pro
 
 Once the end-to-end data pipeline is flowing and traffic violations are actively aggregated and atomically upserted into MongoDB, you can boot the analytics dashboard:
 
-- Execute all cells in `**visualisation.ipynb`\*\* notebook.
+- Execute all cells in `34248773_34220097_visualisation.ipynb` notebook.
 
 ---
 
@@ -47,7 +47,7 @@ Once the end-to-end data pipeline is flowing and traffic violations are actively
 
 When testing is complete, do not violently close the terminal or crash the kernels. The streaming driver is protected by a robust lifecycle interceptor:
 
-- In the `**data_design_streaming.ipynb*`\* notebook, click **"Interrupt the Kernel"**
+- In the `34248773_34220097_data_design_streaming.ipynb` notebook, click **"Interrupt the Kernel"**
 - The system's `try-except-finally` block will safely catch the interrupt signal, flush remaining in-flight micro-batches, release active cluster resources, and output the following clean shutdown log:
   ```text
   Interrupted by CTRL-C. Stopped query
@@ -77,3 +77,13 @@ Generative AI was used strictly to help me organize my thoughts and offer sugges
 - How to use a Left Outer Join in Spark streaming to find vehicles that entered Camera A but never showed up at Camera B, and print them to the console?
 - How to wrap `query.awaitTermination()` in a python try-except block so that when I press the stop/interrupt button in Jupyter, it stops the stream safely without showing ugly error tracks?
 - Help me to organize the docstrings of these function.
+
+### Visualisation Notebook (34248773_34220097_visualisation.ipynb)
+
+Generative AI was used to assist with the following:
+
+- How to create interactive Plotly charts with dual-axis subplots for time-series violation data?
+- How to annotate extreme points (MAX, MIN) and statistical anomalies (z-score spikes/drops) on a Plotly figure?
+- How to dynamically compute and label the 90th percentile threshold on a time-series chart?
+- How to add shaded vertical regions (vrect) to highlight periods where violation counts exceed the 90th percentile?
+- How to set up a MongoDB fallback to CSV loading with error handling in a Jupyter notebook?
