@@ -1,5 +1,13 @@
 # 3182-A2
 
+## Dependencies
+
+The following additional library is required for the visualisation notebook and will be installed automatically when the first cell is run:
+
+- `plotly` — installed via `pip install plotly` (handled by the notebook)
+
+All other dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`) are pre-installed in the course Docker image (`fit3182/pyspark`).
+
 ## Execution Steps & Order of Operations
 
 > **CRITICAL NOTE (Execution Sequence):**
@@ -7,11 +15,11 @@
 
 ### 1️. Launch the Spark Streaming Core Engine
 
-- Open the `**data_design_streaming.ipynb`** notebook.
+- Open the `**data_design_streaming.ipynb`\*\* notebook.
 - **Run all cells sequentially**.
 - This action compiles and activates the Stream-Stream Joins, Data Quality Filters, and unified MongoDB/Console output sinks.
 - The Driver thread will block and enter a real-time listening state. You will see the following confirmation log:
-`[INFO] Starting synchronized dual-stream architecture...`
+  `[INFO] Starting synchronized dual-stream architecture...`
 
 ---
 
@@ -19,11 +27,11 @@
 
 Once the streaming engine is up and actively listening, you can activate the producers to push real-time streams:
 
-- Open and run all cells in `**producer_a.ipynb`** (Camera A data stream).
-- Open and run all cells in `**producer_b.ipynb`** (Camera B data stream).
+- Open and run all cells in `**producer_a.ipynb`\*\* (Camera A data stream).
+- Open and run all cells in `**producer_b.ipynb`\*\* (Camera B data stream).
 - Open and run all cells in `**producer_c.ipynb**` (Camera C data stream).
 
-> *At this point, you can monitor the real-time payload inside each producer's notebook terminal.*
+> _At this point, you can monitor the real-time payload inside each producer's notebook terminal._
 
 ---
 
@@ -31,7 +39,7 @@ Once the streaming engine is up and actively listening, you can activate the pro
 
 Once the end-to-end data pipeline is flowing and traffic violations are actively aggregated and atomically upserted into MongoDB, you can boot the analytics dashboard:
 
-- Execute all cells in `**visualisation.ipynb`** notebook.
+- Execute all cells in `**visualisation.ipynb`\*\* notebook.
 
 ---
 
@@ -39,7 +47,7 @@ Once the end-to-end data pipeline is flowing and traffic violations are actively
 
 When testing is complete, do not violently close the terminal or crash the kernels. The streaming driver is protected by a robust lifecycle interceptor:
 
-- In the `**data_design_streaming.ipynb*`* notebook, click **"Interrupt the Kernel"** 
+- In the `**data_design_streaming.ipynb*`\* notebook, click **"Interrupt the Kernel"**
 - The system's `try-except-finally` block will safely catch the interrupt signal, flush remaining in-flight micro-batches, release active cluster resources, and output the following clean shutdown log:
   ```text
   Interrupted by CTRL-C. Stopped query
@@ -52,7 +60,7 @@ When testing is complete, do not violently close the terminal or crash the kerne
 
 ## GenAI Usage Statement
 
-In compliance with the academic integrity guidelines, this section outlines the utilization of Generative AI tools during the development of this project. 
+In compliance with the academic integrity guidelines, this section outlines the utilization of Generative AI tools during the development of this project.
 
 ### Purpose of Use
 
@@ -69,4 +77,3 @@ Generative AI was used strictly to help me organize my thoughts and offer sugges
 - How to use a Left Outer Join in Spark streaming to find vehicles that entered Camera A but never showed up at Camera B, and print them to the console?
 - How to wrap `query.awaitTermination()` in a python try-except block so that when I press the stop/interrupt button in Jupyter, it stops the stream safely without showing ugly error tracks?
 - Help me to organize the docstrings of these function.
-
