@@ -2,11 +2,7 @@
 
 ## Dependencies
 
-The following additional library is required for the visualisation notebook and will be installed automatically when the first cell is run:
-
-- `plotly` — installed via `pip install plotly` (handled by the notebook)
-
-All other dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`) are pre-installed in the course Docker image (`fit3182/pyspark`).
+All dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`, `matplotlib`, `numpy`) are pre-installed in the course Docker image (`fit3182/pyspark`). No additional installation is required.
 
 ## Execution Steps & Order of Operations
 
@@ -40,6 +36,8 @@ Once the streaming engine is up and actively listening, you can activate the pro
 Once the end-to-end data pipeline is flowing and traffic violations are actively aggregated and atomically upserted into MongoDB, you can boot the analytics dashboard:
 
 - Execute all cells in `34248773_34220097_visualisation.ipynb` notebook.
+
+The visualisation notebook uses `%matplotlib notebook` to render a **live-updating dashboard** with four subplots. It polls MongoDB every 5 seconds and redraws all plots whenever new violation records are detected. To stop the dashboard, click **"Interrupt the Kernel"** (Stop).
 
 ---
 
@@ -82,7 +80,8 @@ Generative AI was used strictly to help me organize my thoughts and offer sugges
 
 Generative AI was used to assist with the following:
 
-- How to create interactive Plotly charts with dual-axis subplots for time-series violation data?
-- How to annotate extreme points (MAX, MIN) and statistical anomalies (z-score spikes/drops) on a Plotly figure?
-- How to dynamically compute and label the 90th percentile threshold on a time-series chart?
-- How to add shaded vertical regions (vrect) to highlight periods where violation counts exceed the 90th percentile?
+- How to implement a real-time polling loop in Jupyter using `%matplotlib notebook` so that a dashboard continuously queries MongoDB and redraws plots with `fig.canvas.draw()`?
+- How to annotate extreme points (MAX) and statistical anomalies (z-score spikes) on a matplotlib figure?
+- How to dynamically compute and display the 90th percentile threshold as a reference line on a time-series chart?
+- How to create a 2×2 subplot grid using `matplotlib.gridspec` with consistent axis labels, legends, and titles?
+- How to render a violation heatmap (hour-of-day × violation type) using `imshow` in matplotlib and annotate the peak cell?
