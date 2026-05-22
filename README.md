@@ -1,9 +1,5 @@
 # 3182-A2
 
-## Dependencies
-
-All dependencies (`pyspark`, `pymongo`, `kafka3`, `pandas`, `matplotlib`, `numpy`) are pre-installed in the course Docker image (`fit3182/pyspark`). No additional installation is required.
-
 ## Execution Steps & Order of Operations
 
 > **CRITICAL NOTE (Execution Sequence):**
@@ -32,14 +28,6 @@ Once the streaming engine is up and actively listening, you can activate the pro
 ---
 
 ### 3️. Real-Time Visualisation Interface
-
-Once the end-to-end data pipeline is flowing and traffic violations are actively aggregated and atomically upserted into MongoDB, you can boot the analytics dashboard:
-
-- Execute all cells in `34248773_34220097_visualisation.ipynb` notebook.
-
-The visualisation notebook uses `%matplotlib notebook` to render a **live-updating dashboard** with four subplots. It polls MongoDB every 5 seconds and redraws all plots whenever new violation records are detected. To stop the dashboard, click **"Interrupt the Kernel"** (Stop).
-
----
 
 ### 4️. Graceful Shutdown of the Data Pipeline
 
@@ -75,13 +63,3 @@ Generative AI was used strictly to help me organize my thoughts and offer sugges
 - How to use a Left Outer Join in Spark streaming to find vehicles that entered Camera A but never showed up at Camera B, and print them to the console?
 - How to wrap `query.awaitTermination()` in a python try-except block so that when I press the stop/interrupt button in Jupyter, it stops the stream safely without showing ugly error tracks?
 - Help me to organize the docstrings of these function.
-
-### Visualisation Notebook (34248773_34220097_visualisation.ipynb)
-
-Generative AI was used to assist with the following:
-
-- How to implement a real-time polling loop in Jupyter using `%matplotlib notebook` so that a dashboard continuously queries MongoDB and redraws plots with `fig.canvas.draw()`?
-- How to annotate extreme points (MAX) and statistical anomalies (z-score spikes) on a matplotlib figure?
-- How to dynamically compute and display the 90th percentile threshold as a reference line on a time-series chart?
-- How to create a 2×2 subplot grid using `matplotlib.gridspec` with consistent axis labels, legends, and titles?
-- How to render a violation heatmap (hour-of-day × violation type) using `imshow` in matplotlib and annotate the peak cell?
