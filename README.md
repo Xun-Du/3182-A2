@@ -33,32 +33,42 @@ After the Spark streaming engine is running and the Kafka producers have started
 
 - `34248773_34220097_visualisation.ipynb`
 
-Run all cells sequentially. The notebook connects to the MongoDB `violations` collection and continuously polls for newly inserted violation records.
+Run all cells sequentially. The notebook connects to the MongoDB `violations` collection and continuously polls for newly inserted violation records. The dashboard is not based on static or hardcoded output. Instead, it repeatedly queries MongoDB and updates the plots using the latest violation records produced by the streaming application.
 
-The visualisation dashboard produces two live line charts:
+The visualisation dashboard contains two live analytical panels:
 
-1. **Violation Count over Event Time**
-   - Shows the number of detected violations over time.
-   - Uses separate lines for instantaneous-speed violations and average-speed violations.
-   - Helps answer when violation activity peaks and whether one violation type is more frequent than the other.
+1. **Subplot A: Real-Time Violations and Average Speed**
+   - Uses a short rolling 60-second window.
+   - Shows the number of new violations detected within each recent time window.
+   - Shows the average violation speed over the same period using a secondary y-axis.
+   - Helps identify when violation activity increases and whether higher violation counts are associated with higher average speeds.
+   - Annotates important points such as maximum and minimum violation counts or speed values.
 
-2. **Speed Pattern over Event Time**
-   - Shows the mean violation speed over time.
-   - Includes a moving average line to make short-term speed trends easier to interpret.
-   - Helps identify whether violation speeds are increasing, decreasing, or staying stable during the monitoring period.
+2. **Subplot B: Real-Time Violation Speed Distribution and Anomaly Analysis**
+   - Uses a longer rolling 5-minute window.
+   - Shows second-level average violation speeds over time by grouping recent violation records by inserted_at second.
+   - Includes a moving average line to smooth short-term speed fluctuations.
+   - Dynamically calculates and displays percentile thresholds, such as median, 75th, 90th, and 95th percentile speed levels.
+   - Highlights unusual speed behaviour, including high-speed spikes and sudden drops.
+   - Helps distinguish normal variation from potentially high-risk traffic behaviour.
+
+The dashboard uses these two different time windows because they support different operational questions. The 60-second window in Subplot A provides a short-term view of current violation activity, while the 5-minute window in Subplot B provides a more stable view of speed patterns and statistical anomalies.
 
 The dashboard also marks important analytical points, including:
 
 - maximum and minimum values,
-- sudden spike regions,
+- sudden spike or drop annotations,
 - dynamically calculated percentile thresholds,
-- speed-limit reference lines where applicable.
+- moving average trends,
+- high-speed anomaly regions.
 
-These annotations are included to support operational monitoring. For example, peaks and spike regions can indicate unusual traffic behaviour, while percentile thresholds help distinguish normal variation from high-risk periods.
+These annotations are included to support operational monitoring rather than simply displaying raw data. For example, sudden spikes may indicate unusual traffic behaviour, while percentile thresholds help identify whether a vehicle speed is only slightly above normal or belongs to the highest-risk range of observed violations.
 
 If no violation records have been written to MongoDB yet, the notebook will wait until records become available. This usually means the Spark streaming notebook or Kafka producers have not started yet, or the producers have not emitted enough records.
 
 To stop the visualisation dashboard, click **Interrupt Kernel** in Jupyter Notebook.
+
+---
 
 ### 4️. Graceful Shutdown of the Data Pipeline
 
@@ -93,7 +103,7 @@ Generative AI was used strictly to help me organize my thoughts and offer sugges
 - How do I create a TTL index in MongoDB using PyMongo to automatically delete documents after 5 years based on a date field?
 - How to use a Left Outer Join in Spark streaming to find vehicles that entered Camera A but never showed up at Camera B, and print them to the console?
 - How to wrap `query.awaitTermination()` in a python try-except block so that when I press the stop/interrupt button in Jupyter, it stops the stream safely without showing ugly error tracks?
-- Help me to organize the docstrings of these function.
-- How can I design the visualisation notebook to show violation counts and speed patterns over event time?
-- How can I annotate maxima, minima, sudden spikes, shaded regions, and percentile thresholds in Matplotlib?
-- How can I adjust Matplotlib/Jupyter Notebook rendering so the live dashboard is readable during execution?
+- Help me to organize the docstrings of these functions.
+- How can I design a real-time Matplotlib visualisation notebook that continuously polls violation records from MongoDB and updates the dashboard in Jupyter Notebook?
+- How can I visualise both short-term violation activity and speed behaviour using a 60-second rolling window for violation count and average speed?
+- How can I visualise longer-term speed distribution using a 5-minute rolling window, moving average line, and dynamically calculated percentile thresholds?
