@@ -1,5 +1,38 @@
 # 3182-A2
 
+## Installation Requirements and Reproducibility
+
+This project is implemented in Python using Jupyter Notebook. The pipeline also requires Apache Kafka, Apache Spark Structured Streaming, and MongoDB to be running correctly before execution. The following libraries and services are required to reproduce the submitted results.
+
+### Required Runtime Services
+
+Before running the notebooks, make sure the following services are available:
+
+- Apache Kafka
+- Apache Spark / PySpark
+- MongoDB
+- Jupyter Notebook
+
+The Kafka server must be running before the producer notebooks are executed. MongoDB must also be running before the Spark streaming notebook writes detected violation records to the database. The visualisation notebook reads from the MongoDB `violations` collection, so it should be executed only after violation records have been inserted.
+
+### Required Python Libraries
+
+The notebooks use the following Python libraries:
+
+- `pyspark` for Spark Structured Streaming and stream-stream joins
+- `kafka-python3` for Kafka producer implementation. The producer notebooks use `from kafka3 import KafkaProducer`.
+- `pymongo` for MongoDB connection, indexing, and write operations
+- `pandas` for data inspection and visualisation preprocessing
+- `numpy` for numerical calculations
+- `matplotlib` for real-time visualisation
+- `IPython` for Jupyter display updates
+
+If the environment does not already contain these packages, install them using:
+
+```bash
+pip install pyspark kafka-python3 pymongo pandas numpy matplotlib ipython
+```
+
 ## Execution Steps & Order of Operations
 
 > **CRITICAL NOTE (Execution Sequence):**
